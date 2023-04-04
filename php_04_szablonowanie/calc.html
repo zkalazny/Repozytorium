@@ -1,0 +1,64 @@
+{extends file="../templates/main.html"}
+
+{block name=footer}Tutaj znajduje się stopka naszego kalkulatora kredytowego{/block}
+
+{block name=content}
+
+<h3>Prosty kalkulator kredytowy</h2>
+	<form class="pure-form pure-form-stacked" action="{$app_url}/app/calc.php" method="post">
+	<fieldset>
+		<label for="x">Kwota: </label>
+		<input id="x" type="text" placeholder="wartość x" name="x" value="{$form['x']}">
+		<label for="y">Lat: </label>
+		<input id="y" type="text" placeholder="wartość y" name="y" value="{$form['y']}">
+		<label for="op">Oprocentowanie: </label>
+		<select id="op" name="op">
+{if isset($form['op_name'])}
+<option value="{$form['op']}">ponownie: {$form['op_name']}</option>
+<option value="" disabled="true">---</option>
+{/if}
+		<option value="2">2%</option>
+		<option value="4">4%</option>
+		<option value="6">6%</option>
+		<option value="8">8%</option>
+	</select>
+	</fieldset>
+<button type="submit" class="pure-button pure-button-primary">Oblicz</button>
+</form>
+<div class="messages">
+	{if isset($messages)}
+	{if count($messages) > 0} 
+		<h4>Wystąpiły błędy: </h4>
+		<ol class="err">
+		{foreach  $messages as $msg}
+		{strip}
+			<li>{$msg}</li>
+		{/strip}
+		{/foreach}
+		</ol>
+	{/if}
+{/if}
+
+{if isset($infos)}
+	{if count($infos) > 0} 
+		<h4>Informacje: </h4>
+		<ol class="inf">
+		{foreach  $infos as $msg}
+		{strip}
+			<li>{$msg}</li>
+		{/strip}
+		{/foreach}
+		</ol>
+	{/if}
+{/if}
+
+{if isset($result)}
+	<h4>Twoja miesięczna rata wynosi: </h4>
+	<p class="res">
+	{$result}
+	</p>
+{/if}
+
+</div>
+
+{/block}
